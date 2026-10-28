@@ -1,0 +1,189 @@
+erDiagram
+    direction LR
+    USUARIO {
+        bigint id PK
+        nvarchar nombres "100"
+        nvarchar apellidos "100"
+        nvarchar correo UK "150"
+        nvarchar password_hash "100"
+        nvarchar rol "20"
+        nvarchar estado "20"
+        nvarchar telefono "30"
+        nvarchar cargo "120"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    CATEGORIA {
+        bigint id PK
+        nvarchar nombre UK "120"
+        nvarchar descripcion "400"
+        nvarchar estado "20"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    CURSO {
+        bigint id PK
+        nvarchar codigo UK "30"
+        nvarchar nombre "180"
+        nvarchar descripcion "1000"
+        bigint categoria_id FK
+        bigint docente_id FK
+        nvarchar estado "20"
+        int horas
+        int cupo
+        nvarchar portada_url "500"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    INSCRIPCION {
+        bigint id PK
+        bigint curso_id FK
+        bigint estudiante_id FK
+        date fecha
+        nvarchar estado "20"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    UNIDAD {
+        bigint id PK
+        bigint curso_id FK
+        nvarchar titulo "180"
+        nvarchar descripcion "500"
+        int orden
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    LECCION {
+        bigint id PK
+        bigint unidad_id FK
+        nvarchar titulo "180"
+        nvarchar contenido "MAX"
+        int orden
+        int duracion_min
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    MATERIAL {
+        bigint id PK
+        bigint leccion_id FK
+        nvarchar nombre "180"
+        nvarchar tipo "20"
+        nvarchar ruta "500"
+        bigint tamanio_kb
+        nvarchar subido_por "150"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    ACTIVIDAD {
+        bigint id PK
+        bigint curso_id FK
+        bigint unidad_id FK
+        nvarchar titulo "180"
+        nvarchar tipo "20"
+        nvarchar descripcion "1000"
+        nvarchar instrucciones "MAX"
+        datetime2 fecha_publicacion
+        datetime2 fecha_limite
+        decimal puntaje_max "5,2"
+        nvarchar estado "20"
+        bigint creado_por FK
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    PREGUNTA {
+        bigint id PK
+        bigint actividad_id FK
+        nvarchar enunciado "1000"
+        nvarchar tipo "30"
+        decimal puntaje "5,2"
+        int orden
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    OPCION {
+        bigint id PK
+        bigint pregunta_id FK
+        nvarchar texto "500"
+        bit es_correcta
+        int orden
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    ENTREGA {
+        bigint id PK
+        bigint actividad_id FK
+        bigint estudiante_id FK
+        datetime2 fecha_entrega
+        nvarchar respuesta_texto "MAX"
+        nvarchar archivo_nombre "255"
+        nvarchar archivo_ruta "500"
+        nvarchar estado "20"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    RESPUESTA {
+        bigint id PK
+        bigint entrega_id FK
+        bigint pregunta_id FK
+        bigint opcion_id
+        nvarchar texto_respuesta "1000"
+        bit es_correcta
+        decimal puntaje "5,2"
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    CALIFICACION {
+        bigint id PK
+        bigint entrega_id FK
+        decimal puntaje "5,2"
+        nvarchar retroalimentacion "1000"
+        datetime2 fecha
+        bigint calificado_por FK
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    AVISO {
+        bigint id PK
+        bigint curso_id FK
+        nvarchar titulo "180"
+        nvarchar mensaje "MAX"
+        nvarchar tipo "20"
+        nvarchar estado "20"
+        datetime2 fecha_publicacion
+        bigint autor_id FK
+        datetime2 creado_en
+        datetime2 actualizado_en
+    }
+    AUDITORIA {
+        bigint id PK
+        bigint usuario_id FK
+        nvarchar usuario_nombre "150"
+        nvarchar accion "60"
+        nvarchar entidad "60"
+        bigint entidad_id
+        nvarchar detalle "500"
+        nvarchar ip "45"
+        datetime2 fecha_hora
+    }
+
+    USUARIO ||--o{ CURSO : "docente_id"
+    USUARIO ||--o{ INSCRIPCION : "estudiante_id"
+    USUARIO |o--o{ ACTIVIDAD : "creado_por"
+    USUARIO ||--o{ ENTREGA : "estudiante_id"
+    USUARIO |o--o{ CALIFICACION : "calificado_por"
+    USUARIO |o--o{ AVISO : "autor_id"
+    USUARIO |o--o{ AUDITORIA : "usuario_id"
+    CATEGORIA ||--o{ CURSO : "categoria_id"
+    CURSO ||--o{ INSCRIPCION : "curso_id"
+    CURSO ||--o{ UNIDAD : "curso_id"
+    CURSO ||--o{ ACTIVIDAD : "curso_id"
+    CURSO ||--o{ AVISO : "curso_id"
+    UNIDAD ||--o{ LECCION : "unidad_id"
+    UNIDAD |o--o{ ACTIVIDAD : "unidad_id"
+    LECCION ||--o{ MATERIAL : "leccion_id"
+    ACTIVIDAD ||--o{ PREGUNTA : "actividad_id"
+    ACTIVIDAD ||--o{ ENTREGA : "actividad_id"
+    PREGUNTA ||--o{ OPCION : "pregunta_id"
+    PREGUNTA ||--o{ RESPUESTA : "pregunta_id"
+    ENTREGA ||--o{ RESPUESTA : "entrega_id"
+    ENTREGA ||--o| CALIFICACION : "entrega_id"
