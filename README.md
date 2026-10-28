@@ -4,9 +4,11 @@ Diseño físico de la base de datos de **Nexora LMS**, una plataforma de gestió
 
 ## Diagrama
 
-[![Modelo físico](diagramas/modelo_fisico_general.svg)](diagramas/modelo_fisico.png)
+[![Modelo físico](diagramas/modelo_fisico_general.png)](diagramas/modelo_fisico.png)
 
-- [Diagrama general (SVG)](diagramas/modelo_fisico_general.svg)
+*Clic en la imagen para abrir el diagrama detallado con todas las columnas.*
+
+- [Diagrama general (PNG)](diagramas/modelo_fisico_general.png)
 - [Diagrama detallado con todas las columnas (PNG)](diagramas/modelo_fisico.png)
 - [Diagrama detallado (SVG)](diagramas/modelo_fisico.svg)
 - [Fuente editable Mermaid](diagramas/modelo_fisico.mmd)
