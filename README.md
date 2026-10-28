@@ -86,7 +86,7 @@ sqlcmd -S <servidor>.database.windows.net -d nexora_lms -U <usuario> -P <contras
 | Almacenamiento | 32 GB |
 | Firewall | Restringido a IP autorizada |
 
-Las credenciales **no** se almacenan en este repositorio.
+Las credenciales de administración de Azure **no** se almacenan en este repositorio; los usuarios demo del seed usan hashes BCrypt.
 
 ## Decisiones de diseño
 
